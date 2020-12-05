@@ -5,3 +5,6 @@ datasets
 
 # Huggingface transformers
 transformers
+
+# Spacy
+spacy
