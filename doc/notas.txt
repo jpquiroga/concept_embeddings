@@ -1,0 +1,18 @@
+Installation of ELK:
+
+    - https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-elastic-stack.html
+
+Start Elasticsearch:
+
+    - sudo /etc/init.d/elasticsearch start
+
+
+Ports:
+
+    - Elasticsearch: 9200
+    
+    - Kibana: 5601
+
+Elasticsearch Common Schema: https://www.elastic.co/guide/en/ecs/current/ecs-reference.html
+
+
