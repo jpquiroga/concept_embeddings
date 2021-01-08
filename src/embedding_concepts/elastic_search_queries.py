@@ -9,7 +9,8 @@ class ElasticSearchQueryManager(object):
 
     def get_sentences_by_word(self, word: str, e_s: Elasticsearch, es_index: Text = None,
                             max_sentences_to_process: int = MAX_SENTENCES_TO_PROCESS,
-                            sentence_min_len: int = SENTENCE_MIN_LEN) -> List[List[str]]:
+                            sentence_min_len: int = SENTENCE_MIN_LEN,
+                            remove_non_alphanumeric_words: bool = True) -> List[List[str]]:
         """
         Get the sentences in the database containing a given word.
 
@@ -31,5 +32,10 @@ class ElasticSearchQueryManager(object):
         e_s_res = e_s.search(body=json.dumps(q), index=es_index, size=max_sentences_to_process)
         e_s_hits = e_s_res["hits"]["hits"]
         candidate_res = [r["_source"]["text"].split(" ") for r in e_s_hits]
+        if remove_non_alphanumeric_words:
+            candidate_res = [[w for w in sentence if self.__is_word(w)] for sentence in candidate_res]
         res = [s for s in candidate_res if word in s and len(s) >= sentence_min_len]
         return res
+
+    def __is_word(self, s) -> bool:
+        return s.isalnum()
